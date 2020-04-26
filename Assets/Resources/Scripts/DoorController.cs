@@ -7,6 +7,8 @@ public class DoorController : UsableGeneric
 {
     [SerializeField]
     private bool opened = true;
+    [SerializeField]
+    private bool locked = false;
     private Animator animator;
     // Start is called before the first frame update
     void Start()
@@ -31,14 +33,18 @@ public class DoorController : UsableGeneric
 
     public override void use()
     {
-        if (this.opened)
+        if (!this.locked)
         {
-            this.opened = false;
-            this.animator.SetBool("opened", this.opened);
-        }else
-        {
-            this.opened = true;
-            this.animator.SetBool("opened", this.opened);
+            if (this.opened)
+            {
+                this.opened = false;
+                this.animator.SetBool("opened", this.opened);
+            }
+            else
+            {
+                this.opened = true;
+                this.animator.SetBool("opened", this.opened);
+            }
         }
     }
 }

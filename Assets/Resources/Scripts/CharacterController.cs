@@ -14,11 +14,13 @@ public class CharacterController : MonoBehaviour
     private Rigidbody rb;
     [SerializeField]
     private Camera characterCamera;
+    private Dictionary<string, Item> inventory;
     private float Hvalue = 0;
     private float Vvalue = 0;
     // Start is called before the first frame update
     void Start()
     {
+        this.inventory = new Dictionary<string, Item>();
         Cursor.lockState = CursorLockMode.Locked;
         this.rb = GetComponent<Rigidbody>();
     }
@@ -134,5 +136,25 @@ public class CharacterController : MonoBehaviour
             }
         }
     }
+    public void addItemToInventory(Item item)
+    {
+        this.inventory.Add(item.getItemName(), item);
+    }
+    public void deleteItemFromInventory(Item item)
+    {
+        if (this.inventory.ContainsKey(item.getItemName()))
+        {
+            this.inventory.Remove(item.getItemName());
+        }
+    }
+    public void dropItemFromInventory(Item item)
+    {
+        if (this.inventory.ContainsKey(item.getItemName()))
+        {
+            this.inventory.Remove(item.getItemName());
+            item.dropItem();
+        }
+    }
+
 
 }
